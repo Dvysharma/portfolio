@@ -8,7 +8,7 @@ const stats = [
   { value: "5+", label: "Industry Internships" },
   { value: "10+", label: "Consulting Clients" },
   { value: "15+", label: "Analytics Projects" },
-  { value: "1", label: "DRDO AI Project" },
+  { value: "2", label: "DRDO & IBM Projects" },
 ];
 
 export default function Hero() {
@@ -94,7 +94,7 @@ export default function Hero() {
             </a>
 
             <a
-              href="/DivyanshuSharma_Resume_PA.pdf"
+              href="/DivyanshuSharma_Resume.pdf"
               download
               className="interactive inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl border border-white/10 hover:border-[#7B61FF]/40 bg-white/5 hover:bg-[#7B61FF]/5 text-[#A0A0A0] hover:text-white font-medium backdrop-blur-md transition-all duration-300 hover:scale-105"
             >

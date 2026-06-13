@@ -8,15 +8,15 @@ const timelineEvents = [
     duration: "Aug 2022 - June 2026",
     role: "B.Tech in Computer Science (Data Science)",
     company: "UPES Dehradun, India",
-    description: "Developing deep technical expertise in data structures, database design, and machine learning models. Maintaining a strong academic record with a CGPA of 8.10/10.0.",
+    description: "Built a strong foundation in data analytics, business intelligence, AI, machine learning, and database systems. Applied analytical thinking and data-driven problem solving across academic, consulting, and AI-focused projects while maintaining a CGPA of 8.2/10.0.",
     icon: GraduationCap,
     color: "#00E5FF",
   },
   {
     duration: "June 2023 - July 2023",
-    role: "Social Awareness & Analytics Lead",
+    role: "Social Internship - Social Media Campaign Analyst",
     company: "Aarohi Blood Centre",
-    description: "Spearheaded digital campaigns and engagement initiatives. Analyzed location-based trends, audience demographics, and campaign responses to plan and optimize outreach events.",
+    description: "Combined data analysis with campaign strategy to evaluate audience engagement, identify outreach opportunities, and support informed decision-making. Contributed to improving campaign performance through insights-driven planning and execution.",
     icon: Target,
     color: "#7B61FF",
   },
@@ -24,7 +24,7 @@ const timelineEvents = [
     duration: "April 2024 - Sept 2024",
     role: "Marketing Analyst Intern",
     company: "IPM Management Services",
-    description: "Leveraged Excel and Power BI to analyze marketing KPIs. Identified core demographics, measured campaign effectiveness, and formulated recommendations to target audiences.",
+    description: "Applied data analytics and business intelligence techniques to evaluate marketing performance and customer behavior. Leveraged Excel and Power BI to transform data into actionable insights that informed strategic marketing decisions.",
     icon: Briefcase,
     color: "#00FFB3",
   },
@@ -32,7 +32,7 @@ const timelineEvents = [
     duration: "June 2025 - July 2025",
     role: "Data Science Intern",
     company: "DRDO - ISSA Lab, Ministry of Defence",
-    description: "Spearheaded the 'Bodhak AI' project, constructing a natural language query system for database interaction. Integrated LangChain models to generate and validate exact SQL queries.",
+    description: "Led the development of Bodhak AI, an AI-powered natural language query system designed to simplify database interaction. Leveraged LangChain and LLM technologies to translate user queries into accurate SQL statements, enabling faster data access and informed decision-making.",
     icon: Cpu,
     color: "#7B61FF",
   },
@@ -45,15 +45,15 @@ const timelineEvents = [
     color: "#00E5FF",
   },
   {
-    duration: "2022 - 2025",
+    duration: "2022 - 2026",
     role: "Business & Technology Consultant",
-    company: "Aspiria Project",
-    description: "Provided branding, digital presence, and technical operations support to 10+ local small businesses, resulting in measurable customer acquisition and service modernization.",
+    company: "Aspiria",
+    description: "Partnered with 10+ small businesses to drive digital transformation, operational efficiency, and brand growth. Delivered strategic recommendations across technology adoption, business processes, and digital presence, enabling measurable business impact and modernization.",
     icon: Target,
     color: "#7B61FF",
   },
   {
-    duration: "Oct 2025 - Dec 2025",
+    duration: "April 2026 - July 2026",
     role: "AI/ML Intern",
     company: "CheckExplore Technologies",
     description: "Worked on real-world AI and data-driven projects. Supported machine learning workflows, data analysis, and insurance problem-solving for key client Yokohama Tyre.",
@@ -90,10 +90,13 @@ export default function About() {
                 <BookOpen className="h-5 w-5 text-[#00E5FF]" /> My Narrative
               </h4>
               <p className="text-[#A0A0A0] leading-relaxed mb-4">
-                I am a CSE student specializing in Data Science at UPES Dehradun, combining a rigorous analytical foundation with practical business acumen. My journey bridges the gap between deep technical systems—like machine learning pipelines and NLP query converters—and high-impact business decision-making.
+                I work at the intersection of data, business, and artificial intelligence, transforming complex information into actionable insights and strategic decisions. My experience spans data analytics, business consulting, dashboard development, and AI-driven solutions, enabling organizations to make informed decisions and unlock growth opportunities.
+              </p>
+              <p className="text-[#A0A0A0] leading-relaxed mb-4">
+                From developing analytics dashboards that streamline business operations to consulting businesses on digital transformation and building AI-powered systems, I focus on bridging technical capabilities with real-world business impact. My approach combines analytical thinking, stakeholder understanding, and emerging AI technologies to solve problems that matter.
               </p>
               <p className="text-[#A0A0A0] leading-relaxed">
-                Whether creating advanced analytics dashboards to streamline marketing operations, consulting local companies on digital modernization, or engineering natural language search layers for military databases, I focus on building robust, scalable solutions that unlock the hidden value in data.
+                Whether it's uncovering trends through data, optimizing business processes, or leveraging machine learning and natural language processing to create intelligent solutions, I am passionate about turning data into measurable value and helping organizations make smarter decisions.
               </p>
             </div>
 
@@ -104,15 +107,27 @@ export default function About() {
               <ul className="space-y-4 text-sm text-[#A0A0A0]">
                 <li className="flex items-start gap-3">
                   <span className="h-2 w-2 rounded-full bg-[#00E5FF] mt-1.5 flex-shrink-0" />
-                  <span><strong>Actionable Intelligence:</strong> Raw data is noise; insights must drive operational actions and strategy.</span>
+                  <span><strong>Actionable Intelligence:</strong> Raw data has limited value without context. I focus on transforming complex datasets into actionable insights that drive informed decisions, operational efficiency, and measurable business outcomes.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="h-2 w-2 rounded-full bg-[#7B61FF] mt-1.5 flex-shrink-0" />
-                  <span><strong>AI Integration:</strong> Infusing Large Language Models (LLMs) to make enterprise databases accessible through simple voice and text commands.</span>
+                  <span><strong>AI Integration:</strong> Infusing artificial intelligence and Large Language Models (LLMs) to simplify workflows, enhance accessibility to information, and create intelligent systems that solve real-world business challenges.</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="h-2 w-2 rounded-full bg-[#00FFB3] mt-1.5 flex-shrink-0" />
-                  <span><strong>Agile Problem Solving:</strong> Diagnosing technological bottlenecks and designing custom workflows from scratch.</span>
+                  <span className="h-2 w-2 rounded-full bg-[#06B6D4] mt-1.5 flex-shrink-0" />
+                  <span><strong>Agile Problem Solving:</strong> Approach challenges with a solution-oriented mindset, rapidly identifying bottlenecks, evaluating alternatives, and designing scalable systems that adapt to evolving business needs.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="h-2 w-2 rounded-full bg-[#EC4899] mt-1.5 flex-shrink-0" />
+                  <span><strong>Data-Informed Decision Making:</strong> Combine analytical rigor with business understanding to uncover patterns, measure performance, and support strategic decisions through evidence rather than assumptions.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="h-2 w-2 rounded-full bg-[#10B981] mt-1.5 flex-shrink-0" />
+                  <span><strong>Bridging Business & Technology:</strong> Act as a bridge between technical capabilities and business objectives, ensuring that data, analytics, and AI initiatives create meaningful organizational value.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="h-2 w-2 rounded-full bg-[#7B61FF] mt-1.5 flex-shrink-0" />
+                  <span><strong>Continuous Learning & Innovation: </strong> Technology evolves rapidly, and so do I. I embrace continuous learning, experimentation, and emerging technologies to remain adaptable and deliver forward-thinking solutions.</span>
                 </li>
               </ul>
             </div>

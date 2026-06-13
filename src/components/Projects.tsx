@@ -21,17 +21,17 @@ const GithubIcon = (props: React.SVGProps<SVGSVGElement>) => (
 
 const projects = [
   {
-    title: "DRDO Bodhak AI & IBM ML Platforms",
-    category: "AI & ML Internships Research",
-    overview: "A portfolio of advanced data science solutions developed during research and enterprise internships, spanning NLP translation engines and predictive classification systems.",
-    problem: "Manual relational database queries were inaccessible to non-technical defense staff, and passenger survival forecasts required cleaned, optimized classification models.",
-    solution: "Integrated LangChain models to build a text-to-SQL conversion pipeline at DRDO, and implemented classification models (Logistic Regression, Random Forest) using scikit-learn at IBM.",
-    impact: "Decoupled complex database architectures from direct SQL queries (DRDO), and produced high-accuracy predictive models with visual reporting using Seaborn (IBM).",
-    learnings: "Gained expertise in semantic query translation, prompt engineering, and predictive ML classification pipelines.",
-    tech: ["LangChain", "Scikit-Learn", "Python", "SQL", "NLP", "Matplotlib/Seaborn"],
+    title: "Bodhak AI Text-to-SQL Engine",
+    category: "AI & Data intelligence",
+    overview: "An AI-powered conversational data platform that converts natural language questions into SQL queries, enabling users to retrieve real-time insights from structured databases without SQL expertise.",
+    problem: "Accessing data from relational databases often requires technical SQL knowledge, creating dependency on database specialists and slowing down analytical decision-making processes.",
+    solution: "Developed a Flask-based application integrating LangChain, Ollama, and MySQL to translate user queries into executable SQL, display structured results, and support CSV export functionality.",
+    impact: "Simplified database interaction for non-technical users, reduced query complexity, and demonstrated practical AI-driven analytics suitable for secure enterprise and research environments.",
+    learnings: "Gained hands-on experience in LLM integration, prompt engineering, backend development, database connectivity, and building end-to-end AI-powered applications.",
+    tech: ["LangChain", "Ollama", "Python", "SQL", "NLP", "Flask"],
     icon: Database,
-    github: "https://github.com/sharmadivyanshudds",
-    link: "#",
+    github: "https://github.com/Dvysharma/Text-to-SQL-System",
+    link: "https://drive.google.com/drive/folders/187UHSlzJ5odGgZgR7xs1dxqJnBvkadD5?usp=sharing",
     color: "#00E5FF",
     glowColor: "rgba(0, 229, 255, 0.15)"
   },
@@ -45,8 +45,8 @@ const projects = [
     learnings: "Mastered data cleaning in Excel/SQL, advanced DAX modeling in Power BI, and the fundamentals of retail analytical visualizations.",
     tech: ["Power BI", "DAX", "SQL", "Excel", "Data Modeling", "Business Intelligence"],
     icon: BarChart3,
-    github: "https://github.com/sharmadivyanshudds",
-    link: "#",
+    github: "https://github.com/Dvysharma/Blinkit-Power-BI",
+    link: "https://drive.google.com/drive/folders/1kHvEl-XYNvPvrCNdB7Osq8YRCT86NFgr?usp=sharing",
     color: "#7B61FF",
     glowColor: "rgba(123, 97, 255, 0.15)"
   },
@@ -60,11 +60,41 @@ const projects = [
     learnings: "Acquired client communication, stakeholder management, requirement gathering, and technical coaching skills.",
     tech: ["Business Strategy", "Market Research", "Digital Branding", "Requirement Gathering", "Client Consultation"],
     icon: Users,
-    github: "https://github.com/sharmadivyanshudds",
-    link: "#",
+    github: "https://github.com/Dvysharma",
+    link: "https://drive.google.com/drive/folders/1DEkr54ubzC6tmJGZwvI5s57-S6Wuq9kB?usp=sharing",
     color: "#00FFB3",
     glowColor: "rgba(0, 255, 179, 0.15)"
-  }
+  },
+  {
+    title: "TITANIC SURVIVAL PREDICTION",
+    category: "MACHINE LEARNING & DATA ANALYTICS",
+    overview: "Developed a predictive machine learning model to analyze passenger demographics and travel attributes from the Titanic dataset, determining the likelihood of survival based on historical patterns and statistical insights.",
+    problem: "Passenger survival depended on multiple interconnected factors such as age, gender, ticket class, fare, and family size, making accurate outcome prediction challenging through manual analysis.",
+    solution: "Performed data cleaning, feature engineering, and exploratory data analysis using Python libraries such as Pandas and NumPy. Built and evaluated classification models including Logistic Regression and Random Forest to predict survival probabilities.",
+    impact: "Achieved strong prediction accuracy while identifying key survival indicators, demonstrating how data-driven models can uncover hidden patterns and support informed decision-making.",
+    learnings: "Gained hands-on experience in data preprocessing, feature selection, model evaluation, classification algorithms, and visualization techniques using Python, Scikit-learn, and Matplotlib.",
+    tech: ["Python", "Pandas", "NumPy", "Scikit-Learn", "Logistic Regression", "Random Forest", "Matplotlib"],
+    icon: BarChart3,
+    github: "https://github.com/Dvysharma/Titanic-Survival-Prediction-Machine-Learning-Project",
+    link: "https://drive.google.com/drive/folders/1ODVqgQIwVwpvDR65s1grvMQYGAocwHjF?usp=sharing",
+    color: "#7B61FF",
+    glowColor: "rgba(123, 97, 255, 0.15)"
+  },
+  {
+    title: "CampusConnect - Smart Campus Networking Platform",
+    category: "Campus Engagement & Full-Stack Development",
+    overview: "A centralized web platform designed to connect students, clubs, and college communities by providing seamless communication, event management, and campus engagement features.",
+    problem: "Campus information was scattered across multiple channels, making it difficult for students to stay updated on events, announcements, opportunities, and club activities.",
+    solution: "Developed a full-stack web application using Flask, HTML, CSS, and JavaScript to provide a unified platform for campus communication. Integrated CAI (Campus Connect Artificial Intelligence) for smart user assistance and navigation.",
+    impact: "Improved accessibility to campus information, streamlined communication between students and organizations, and enhanced overall campus engagement through a single digital ecosystem.",
+    learnings: "Gained hands-on experience in full-stack web development, Flask backend integration, database management, UI/UX design, and AI assistant implementation within a real-world application.",
+    tech: ["Flask", "Python", "HTML", "CSS", "JavaScript", "MySQL", "AI Integration (CAI)"],
+    icon: Users,
+    github: "https://github.com/Dvysharma/Campus-Connect-Main",
+    link: "https://drive.google.com/drive/folders/1mnBnk7HkNANJTtFutAShwGwEgzk9ROrD?usp=sharing",
+    color: "#00E5FF",
+    glowColor: "rgba(0, 229, 255, 0.15)"
+  },
 ];
 
 export default function Projects() {
@@ -175,6 +205,8 @@ export default function Projects() {
                     </a>
                     <a
                       href={proj.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="interactive flex items-center gap-1.5 text-xs text-[#A0A0A0] hover:text-white transition-colors"
                     >
                       <ExternalLink className="h-4 w-4" /> Preview

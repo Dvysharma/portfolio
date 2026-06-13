@@ -9,7 +9,7 @@ const certifications = [
     provider: "Microsoft",
     icon: ShieldCheck,
     color: "#00E5FF",
-    link: "https://learn.microsoft.com/en-us/credentials/certifications/azure-data-scientist",
+    link: "https://drive.google.com/file/d/1b3n2wP1kXa-9v9oznEsWdlK2QCqxGECX/view?usp=sharing",
     glowColor: "rgba(0, 229, 255, 0.1)"
   },
   {
@@ -17,15 +17,15 @@ const certifications = [
     provider: "Coursera",
     icon: Database,
     color: "#7B61FF",
-    link: "https://www.coursera.org/learn/sql-data-science-python",
+    link: "https://drive.google.com/file/d/1oVvgoWBoRPhVEVCiQzRcxg4VLzJPXUQ8/view?usp=sharing",
     glowColor: "rgba(123, 97, 255, 0.1)"
   },
   {
-    title: "Microsoft Excel - Advanced Analytical Models",
+    title: "Microsoft Excel: A Beginners Guide to Pivot Tables in Excel",
     provider: "Infosys",
     icon: FileSpreadsheet,
     color: "#00FFB3",
-    link: "#",
+    link: "https://drive.google.com/file/d/11KBcNjXy_Xl8QERMLUN0h4zy7A7mQ5cF/view?usp=sharing",
     glowColor: "rgba(0, 255, 179, 0.1)"
   },
   {
@@ -33,7 +33,7 @@ const certifications = [
     provider: "Infosys",
     icon: Award,
     color: "#7B61FF",
-    link: "#",
+    link: "https://drive.google.com/file/d/1WeXIqJd7wAOXtSe4PDsnsobYGvy0fJJG/view?usp=sharing",
     glowColor: "rgba(123, 97, 255, 0.1)"
   },
   {
@@ -41,8 +41,80 @@ const certifications = [
     provider: "Infosys",
     icon: BarChart2,
     color: "#00E5FF",
-    link: "#",
+    link: "https://drive.google.com/file/d/1fI7-sp5iILzFp_WoO1ngTr_QHwQ0frIY/view?usp=sharing",
     glowColor: "rgba(0, 229, 255, 0.1)"
+  },
+  {
+    title: "Basics of Business Communication",
+    provider: "Infosys",
+    icon: Award,
+    color: "#7B61FF",
+    link: "https://drive.google.com/file/d/18fX6vnCGLeR4rsxHZGJVbFzpP_ujN770/view?usp=sharing",
+    glowColor: "rgba(123, 97, 255, 0.1)"
+  },
+  {
+    title: "Python for Data Science, AI & Development",
+    provider: "IBM",
+    icon: Database,
+    color: "#00E5FF",
+    link: "https://drive.google.com/file/d/10RXSKD8RykvLjAVQHf6QNVr4Lo4-0tts/view?usp=sharing",
+    glowColor: "rgba(0, 229, 255, 0.1)"
+  },
+  {
+    title: "Tools for Data Science",
+    provider: "IBM",
+    icon: FileSpreadsheet,
+    color: "#00FFB3",
+    link: "https://drive.google.com/file/d/1zxRBkia7gLjw2ofXgMYTVcSXR5sQL72i/view?usp=sharing",
+    glowColor: "rgba(0, 255, 179, 0.1)"
+  },
+  {
+    title: "Data Science Methodology",
+    provider: "IBM",
+    icon: BarChart2,
+    color: "#7B61FF",
+    link: "https://drive.google.com/file/d/1koxnL16ABMZDNDGLN2XwGDPS93i8BxIU/view?usp=sharing",
+    glowColor: "rgba(123, 97, 255, 0.1)"
+  },
+  {
+    title: "What is Data Science?",
+    provider: "IBM",
+    icon: ShieldCheck,
+    color: "#00E5FF",
+    link: "https://drive.google.com/file/d/1SvaVCMzajiI3emD7ZbBKGkzuaAlWWOEa/view?usp=sharing",
+    glowColor: "rgba(0, 229, 255, 0.1)"
+  },
+  {
+    title: "Data Analysis Concepts",
+    provider: "Infosys",
+    icon: FileSpreadsheet,
+    color: "#00FFB3",
+    link: "https://drive.google.com/file/d/1bfSHE3ul3oL_3LJVJVwqjEcPIVuh8jGp/view?usp=sharing",
+    glowColor: "rgba(0, 255, 179, 0.1)"
+  },
+  {
+    title: "Data Management",
+    provider: "TCS",
+    icon: Database,
+    color: "#7B61FF",
+    link: "https://drive.google.com/file/d/1j37CIc5U9JqpBYr_liG5u4DDjPJ7W4v8/view?usp=sharing",
+    glowColor: "rgba(123, 97, 255, 0.1)"
+  },
+  {
+    title: "TCS iON Career Edge - Young Professional",
+    provider: "TCS",
+    icon: Award,
+    color: "#00E5FF",
+    link: "https://drive.google.com/file/d/1Eio1l3x4SW6-CbT0TE1sgJ_LgDZKt48E/view?usp=sharing",
+    glowColor: "rgba(0, 229, 255, 0.1)"
+  },
+  {
+    title: "Innovation Through Design: Think, Make, Break, Repeat",
+    provider: "University of Sydney",
+    icon: BarChart2,
+    color: "#00FFB3",
+    link: "https://drive.google.com/file/d/1PpNxWzm0UKybGqkG-d2yR_CnZUpjM13L/view?usp=sharing",
+    glowColor: "rgba(0, 255, 179, 0.1)"
   }
 ];
 

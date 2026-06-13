@@ -10,28 +10,28 @@ const skillCategories = [
     icon: BarChart3,
     color: "#00E5FF",
     shadow: "rgba(0, 229, 255, 0.15)",
-    skills: ["SQL (MySQL/Postgres)", "Power BI", "Excel (Advanced)", "Python", "Tableau", "Data Visualization", "Pandas & NumPy"],
+    skills: ["SQL (MySQL/Postgres)", "Power BI", "Excel (Advanced)", "Python", "Tableau", "Data Visualization", "Pandas", "NumPy","Matplotlib", "Data Cleaning", "Exploratory Data Analysis"],
   },
   {
     title: "AI & Machine Learning",
     icon: Cpu,
     color: "#7B61FF",
     shadow: "rgba(123, 97, 255, 0.15)",
-    skills: ["Machine Learning", "Generative AI", "NLP", "LangChain Integration", "PyTorch", "Hugging Face Hub", "Scikit-Learn"],
+    skills: ["Machine Learning", "Generative AI", "NLP", "LangChain Integration", "PyTorch", "Hugging Face Hub", "Scikit-Learn", "RAG Models", "AI Solutions Design", "Prompt Engineering", "Model Evaluation"],
   },
   {
     title: "Business Analytics",
     icon: TrendingUp,
     color: "#00FFB3",
     shadow: "rgba(0, 255, 179, 0.15)",
-    skills: ["Market Research", "Business Strategy", "Competitive Analysis", "Requirement Gathering", "Solution Design", "Stakeholder Communication"],
+    skills: ["Market Research", "Business Strategy", "Competitive Analysis", "Requirement Gathering", "Solution Design", "KPI Development", "Power Point", "Stakeholder Communication", "Operational Efficiency", "Business Intelligence"],
   },
   {
     title: "Technology & Databases",
     icon: Database,
     color: "#00E5FF",
     shadow: "rgba(0, 229, 255, 0.15)",
-    skills: ["Flask APIs", "REST Web Services", "Relational Databases", "Prompt Engineering", "Software Prototyping", "Data Wrangling"],
+    skills: ["Flask APIs", "MySQL", "Relational Databases", "Prompt Engineering","ETL Processes","Supabase", "Software Understanding", "Data Architecture", "Database Design", "API Calling"],
   },
 ];
 
@@ -69,13 +69,12 @@ export default function Skills() {
           <h3 className="text-3xl sm:text-5xl font-bold text-white tracking-tight">
             Skill Galaxy & <span className="bg-gradient-to-r from-[#00FFB3] to-[#00E5FF] bg-clip-text text-transparent">Tech Stack</span>
           </h3>
-          <p className="text-[#A0A0A0] text-sm sm:text-base max-w-xl mx-auto mt-4 font-light">
-            Interactive 3D constellation of tools, systems, and strategy models I leverage to build solutions. Click and drag to spin.
+          <p className="text-[#A0A0A0] text-sm sm:text-base max-w-2xl mx-auto mt-4 font-light">
+            A curated view of the analytics, business intelligence, and AI technologies that power my approach to transform data into insights, drive strategic decisions, and build intelligent solutions.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          
           {/* 3D Canvas Column */}
           <div className="lg:col-span-5 flex justify-center items-center relative">
             <div className="absolute inset-0 bg-gradient-to-tr from-[#7B61FF]/10 to-transparent rounded-full blur-2xl pointer-events-none" />

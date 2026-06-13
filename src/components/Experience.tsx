@@ -1,7 +1,31 @@
 "use client";
 
 import { motion } from "framer-motion";
+import React, { useState } from "react";
+import type { ElementType } from "react";
 import { Cpu, ShieldCheck, TrendingUp, ChevronRight, Target } from "lucide-react";
+
+function Logo({ src, Icon, alt, color }: { src?: string; Icon?: ElementType | any; alt?: string; color?: string }) {
+  const [errored, setErrored] = useState(false);
+
+  if (src && !errored) {
+    return (
+      // eslint-disable-next-line jsx-a11y/alt-text
+      <img
+        src={src}
+        alt={alt}
+        className="h-full w-full object-contain"
+        onError={() => setErrored(true)}
+      />
+    );
+  }
+
+  if (Icon) {
+    return <Icon className="h-7 w-7" style={{ color }} />;
+  }
+
+  return null;
+}
 
 const experiences = [
   {
@@ -10,7 +34,7 @@ const experiences = [
     location: "Delhi, India (On-site)",
     role: "Data Science Intern",
     duration: "June 2025 - July 2025",
-    icon: ShieldCheck,
+    iconSrc: "/drdo_icon.png",
     color: "#00E5FF",
     bgLight: "rgba(0, 229, 255, 0.05)",
     borderLight: "rgba(0, 229, 255, 0.2)",
@@ -28,7 +52,7 @@ const experiences = [
     location: "Remote",
     role: "Data Science Intern",
     duration: "June 2025 - July 2025",
-    icon: Cpu,
+    iconSrc: "/ibm_icon.png",
     color: "#7B61FF",
     bgLight: "rgba(123, 97, 255, 0.05)",
     borderLight: "rgba(123, 97, 255, 0.2)",
@@ -41,11 +65,12 @@ const experiences = [
     skills: ["Scikit-Learn", "Machine Learning", "Data Preprocessing", "Exploratory Data Analysis", "Matplotlib", "Seaborn"]
   },
   {
-    company: "Aspiria Project",
+    company: "Aspiria",
     companyFull: "Aspiria Business Consulting",
-    location: "Dehradun, India (Hybrid)",
+    location: "Remote",
     role: "Business & Technology Consultant",
     duration: "2022 - 2025",
+    iconSrc: "/aspiria_icon.png",
     icon: Target,
     color: "#00FFB3",
     bgLight: "rgba(0, 255, 179, 0.05)",
@@ -59,19 +84,19 @@ const experiences = [
     skills: ["Business Consulting", "Digital Strategy", "Requirement Gathering", "Client Relations", "Branding & Design"]
   },
   {
-    company: "CheckExplore Technologies",
+    company: "CheckExplore",
     companyFull: "CheckExplore Technologies",
-    location: "Dehradun, India (On-site)",
+    location: "Navi Mumbai, India (On-site)",
     role: "AI / ML Intern",
-    duration: "Oct 2025 - Dec 2025",
-    icon: Cpu,
+    duration: "April 2026 - July 2026",
+    iconSrc: "/checkexplore_icon_new.png",
     color: "#7B61FF",
     bgLight: "rgba(123, 97, 255, 0.05)",
     borderLight: "rgba(123, 97, 255, 0.2)",
     achievements: [
       "Worked on real-world AI and data-driven projects to automate analysis workflows.",
       "Supported machine learning workflows, preprocessing, and analysis for key client Yokohama Tyre.",
-      "Assisted in solving complex insurance-related business problems using statistical methodologies.",
+      "Assisted in solving complex insurance-related business problems using AI and ML methodologies.",
       "Collaborated with cross-functional technical teams to support decision-making frameworks."
     ],
     skills: ["AI", "Machine Learning", "Data Analysis", "Predictive Workflows", "Team Collaboration"]
@@ -82,10 +107,11 @@ const experiences = [
     location: "Dehradun, India (Hybrid)",
     role: "Marketing Analyst Intern",
     duration: "April 2024 - Sept 2024",
-    icon: TrendingUp,
+    iconSrc: "/ipm_icon.jpeg",
     color: "#00E5FF",
     bgLight: "rgba(0, 229, 255, 0.05)",
     borderLight: "rgba(0, 229, 255, 0.2)",
+
     achievements: [
       "Utilized Power BI and Excel to analyze and cross-reference performance parameters for ad campaigns.",
       "Monitored customer acquisitions, clicks, and conversion ratios, highlighting patterns for improved demographic matching.",
@@ -96,10 +122,10 @@ const experiences = [
   {
     company: "Aarohi Blood Centre",
     companyFull: "Aarohi Blood Centre",
-    location: "June - July 2023",
+    location: "June 2023 - July 2023",
     role: "Campaign Analyst & Awareness Lead",
     duration: "June 2023 - July 2023",
-    icon: Target,
+    iconSrc: "/aarohi_icon.png",
     color: "#7B61FF",
     bgLight: "rgba(123, 97, 255, 0.05)",
     borderLight: "rgba(123, 97, 255, 0.2)",
@@ -132,7 +158,7 @@ export default function Experience() {
         {/* Experience Cards Container */}
         <div className="space-y-8 max-w-5xl mx-auto">
           {experiences.map((exp, idx) => {
-            const Icon = exp.icon;
+            const Icon = exp.icon as any;
             return (
               <motion.div
                 key={idx}
@@ -154,13 +180,13 @@ export default function Experience() {
                   {/* Left Side: Role details */}
                   <div className="flex gap-4 items-start">
                     <div
-                      className="h-12 w-12 rounded-2xl flex items-center justify-center border transition-all duration-300 group-hover:scale-110 flex-shrink-0"
+                      className="h-14 w-14 rounded-3xl flex items-center justify-center border transition-all duration-300 group-hover:scale-110 flex-shrink-0 overflow-hidden bg-white"
                       style={{
                         backgroundColor: exp.bgLight,
                         borderColor: exp.borderLight,
                       }}
                     >
-                      <Icon className="h-6 w-6" style={{ color: exp.color }} />
+                      <Logo src={exp.iconSrc} Icon={Icon} alt={`${exp.company} logo`} color={exp.color} />
                     </div>
                     <div>
                       <h4 className="text-xl sm:text-2xl font-bold text-white group-hover:text-white transition-colors">

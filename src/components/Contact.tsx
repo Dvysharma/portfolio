@@ -109,7 +109,7 @@ export default function Contact() {
         <div className="text-center mb-20">
           <h2 className="text-xs uppercase tracking-widest text-[#00FFB3] font-semibold mb-2">Get In Touch</h2>
           <h3 className="text-3xl sm:text-5xl font-bold text-white tracking-tight">
-            Let's Build Something <span className="bg-gradient-to-r from-[#00FFB3] to-[#00E5FF] bg-clip-text text-transparent">Intelligent</span>
+            Data Speaks I <span className="bg-gradient-to-r from-[#00FFB3] to-[#00E5FF] bg-clip-text text-transparent">Listen</span>
           </h3>
         </div>
 
@@ -122,7 +122,7 @@ export default function Contact() {
             <div>
               <h4 className="text-2xl font-bold text-white mb-4">Contact Information</h4>
               <p className="text-[#A0A0A0] text-sm sm:text-base leading-relaxed mb-8">
-                Have an analytics opportunity, business strategy bottleneck, or custom LLM integration project? Reach out through the form, email, or social profiles.
+                Whether it's data analytics, business strategy, AI innovation, or technology-driven decision making, I'm always open to meaningful conversations and new opportunities.
               </p>
 
               <div className="space-y-4">
@@ -173,7 +173,7 @@ export default function Contact() {
               <div className="flex justify-between items-start">
                 <div>
                   <h5 className="text-lg font-extrabold tracking-wide text-white uppercase">Divyanshu Sharma</h5>
-                  <span className="text-[10px] uppercase font-bold tracking-widest text-[#00E5FF]">The Intelligence Architect</span>
+                  <span className="text-[10px] uppercase font-bold tracking-widest text-[#00E5FF]">DATA & AI PROFESSIONAL</span>
                 </div>
                 {/* Micro chip visualization */}
                 <div className="h-7 w-9 rounded-md bg-gradient-to-r from-yellow-500/30 to-yellow-600/30 border border-yellow-500/40 relative">
@@ -183,16 +183,16 @@ export default function Contact() {
               </div>
 
               <div className="space-y-1 font-mono text-[10px] text-[#A0A0A0]">
-                <div>ST_IP: 192.168.1.104 // SECTOR_D</div>
-                <div>QUERY_ENGINE: LANGCHAIN_V4 // DRDO_ENG</div>
-                <div>SPECIALIZATION: DATA_SCIENCE // TECH_CONSULT</div>
+                <div>MISSION: TURNING_DATA_INTO_DECISIONS</div>
+                <div>TOOLKIT: SQL // POWER_BI // PYTHON // AI // Tableau // Excel</div>
+                <div>SPECIALIZATION: DATA_ANALYTICS // BUSINESS_ANALYTICS // AI // TECH_CONSULTANT</div>
               </div>
 
               <div className="flex justify-between items-center pt-2 border-t border-white/5">
-                <span className="text-[9px] uppercase tracking-widest text-[#A0A0A0] font-bold">UPES DEHRADUN</span>
+                <span className="text-[9px] uppercase tracking-widest text-[#A0A0A0] font-bold">DATA SPEAKS I LISTEN</span>
                 <div className="flex gap-2">
                   <a
-                    href="https://linkedin.com"
+                    href="https://www.linkedin.com/in/divyanshu-sharma-02591726a/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="h-6 w-6 rounded-md bg-white/5 hover:bg-white/10 flex items-center justify-center text-white/70 hover:text-white transition-colors"
@@ -200,7 +200,7 @@ export default function Contact() {
                     <LinkedinIcon className="h-3.5 w-3.5" />
                   </a>
                   <a
-                    href="https://github.com/sharmadivyanshudds"
+                    href="https://github.com/Dvysharma"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="h-6 w-6 rounded-md bg-white/5 hover:bg-white/10 flex items-center justify-center text-white/70 hover:text-white transition-colors"
