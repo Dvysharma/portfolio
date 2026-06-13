@@ -1,0 +1,119 @@
+@import "tailwindcss";
+
+:root {
+  --background: #050816;
+  --foreground: #ffffff;
+  
+  --primary: #00E5FF;
+  --secondary: #7B61FF;
+  --accent: #00FFB3;
+  --muted: #A0A0A0;
+}
+
+@theme {
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-muted-text: var(--muted);
+  --color-dark-bg: var(--background);
+  
+  --animate-glow: glow 3s ease-in-out infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-slow: pulseSlow 8s ease-in-out infinite;
+  
+  @keyframes glow {
+    0%, 100% { text-shadow: 0 0 10px rgba(0, 229, 255, 0.4), 0 0 20px rgba(0, 229, 255, 0.2); }
+    50% { text-shadow: 0 0 20px rgba(0, 229, 255, 0.7), 0 0 35px rgba(0, 229, 255, 0.4); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(1deg); }
+  }
+  @keyframes pulseSlow {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.05); }
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #050816;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(123, 97, 255, 0.3);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 229, 255, 0.5);
+}
+
+/* Global Reset and Aesthetics */
+html {
+  scroll-behavior: smooth;
+  background-color: #050816;
+  color: #ffffff;
+}
+
+body {
+  background-color: #050816;
+  color: #ffffff;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* The Intelligence Architect Utilities */
+.bg-mesh {
+  background-color: #050816;
+  background-image: 
+    radial-gradient(at 10% 20%, rgba(123, 97, 255, 0.15) 0px, transparent 40%),
+    radial-gradient(at 90% 10%, rgba(0, 229, 255, 0.15) 0px, transparent 45%),
+    radial-gradient(at 50% 80%, rgba(0, 255, 179, 0.08) 0px, transparent 50%);
+  background-attachment: fixed;
+}
+
+.glass-card {
+  background: rgba(10, 15, 30, 0.55);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card-hover:hover {
+  border-color: rgba(0, 229, 255, 0.25);
+  box-shadow: 0 15px 40px -5px rgba(0, 229, 255, 0.12);
+  background: rgba(10, 15, 30, 0.75);
+  transform: translateY(-4px);
+}
+
+.glass-card-accent {
+  border: 1px solid rgba(0, 255, 179, 0.15);
+  box-shadow: 0 0 20px rgba(0, 255, 179, 0.05);
+}
+
+.text-glow-primary {
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.3), 0 0 20px rgba(0, 229, 255, 0.1);
+}
+
+.text-glow-secondary {
+  text-shadow: 0 0 10px rgba(123, 97, 255, 0.3), 0 0 20px rgba(123, 97, 255, 0.1);
+}
+
+.text-glow-accent {
+  text-shadow: 0 0 10px rgba(0, 255, 179, 0.3), 0 0 20px rgba(0, 255, 179, 0.1);
+}
+
+/* Subtle Neumorphism Details */
+.shadow-inset {
+  box-shadow: inset 1px 1px 3px rgba(255, 255, 255, 0.05), inset -1px -1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* Animation utilities */
+.delay-1 { animation-delay: 1s; }
+.delay-2 { animation-delay: 2s; }
+.delay-3 { animation-delay: 3s; }
