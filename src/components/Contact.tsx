@@ -57,27 +57,17 @@ export default function Contact() {
     
     setStatus("sending");
     
-    // Retrieve Web3Forms access key from env file or fall back to code block
-    const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
-    
-    if (!accessKey || accessKey.includes("YOUR_WEB3FORMS")) {
-      console.warn("Web3Forms Access Key is not configured in env variables.");
-    }
-
     try {
-      const response = await fetch("https://api.web3forms.com/submit", {
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
         body: JSON.stringify({
-          access_key: accessKey || "YOUR_ACCESS_KEY_HERE",
           name: formState.name,
           email: formState.email,
           message: formState.message,
-          subject: "New Portfolio Enquiry - Divyanshu Sharma",
-          from_name: "Portfolio Contact System",
         }),
       });
 
