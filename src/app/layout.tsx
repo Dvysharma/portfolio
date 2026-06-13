@@ -13,8 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Divyanshu Sharma | The Intelligence Architect - Portfolio",
-  description: "Personal Portfolio of Divyanshu Sharma - Data Analyst, Business Analyst, AI Enthusiast, and Technology Consultant. Specialized in transforming complex data into business intelligence using Python, SQL, Power BI, and LangChain.",
+  title: "Divyanshu Sharma | Portfolio",
+  description:
+    "Personal portfolio of Divyanshu Sharma — Data & AI professional. Specialized in transforming complex data into business intelligence using Python, SQL, Power BI and AI.",
   keywords: [
     "Divyanshu Sharma",
     "Data Analyst Portfolio",
@@ -32,6 +33,29 @@ export const metadata: Metadata = {
   icons: {
     icon: "/Profile_icon.png",
     apple: "/Profile_icon.png",
+  },
+  openGraph: {
+    title: "Divyanshu Sharma | Portfolio",
+    description:
+      "Personal portfolio of Divyanshu Sharma — Data & AI professional. Specialized in transforming complex data into business intelligence using Python, SQL, Power BI and AI.",
+    url: "https://portfolio-pr837z6sl-divyanshu-sharma-s-projects1.vercel.app/",
+    siteName: "Divyanshu Sharma | Portfolio",
+    images: [
+      {
+        url: "/Profile_icon.png",
+        width: 800,
+        height: 800,
+        alt: "Divyanshu Sharma",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Divyanshu Sharma | Portfolio",
+    description:
+      "Personal portfolio of Divyanshu Sharma — Data & AI professional.",
+    images: ["/Profile_icon.png"],
   },
 };
 
