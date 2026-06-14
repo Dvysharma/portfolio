@@ -8,7 +8,7 @@ const stats = [
   { value: "5+", label: "Industry Internships" },
   { value: "10+", label: "Consulting Clients" },
   { value: "15+", label: "Analytics Projects" },
-  { value: "2", label: "DRDO & IBM Projects" },
+  { value: "2", label: "DRDO & IBM Industry Projects" },
 ];
 
 export default function Hero() {
@@ -68,7 +68,7 @@ export default function Hero() {
           >
             <span className="whitespace-nowrap">Data Analyst</span> <span className="text-[#7B61FF]">|</span>{" "}
             <span className="whitespace-nowrap">Business Analyst</span> <span className="text-[#00E5FF]">|</span>{" "}
-            <span className="whitespace-nowrap">AI Enthusiast</span> <span className="text-[#00FFB3]">|</span>{" "}
+            <span className="whitespace-nowrap">AI & Data Professional</span> <span className="text-[#00FFB3]">|</span>{" "}
             <span className="whitespace-nowrap">Technology Consultant</span>
           </motion.p>
 

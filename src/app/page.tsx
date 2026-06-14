@@ -53,7 +53,7 @@ export default function Home() {
           <a href="#" className="interactive flex items-center gap-2 group">
             <div className="h-9 w-9 rounded-full bg-gradient-to-tr from-[#00E5FF] to-[#7B61FF] p-[1px]">
               <div className="h-full w-full bg-[#050816] rounded-full flex items-center justify-center overflow-hidden group-hover:opacity-90 transition-opacity">
-                <img src="/Profile_icon.png" alt="Divyanshu Sharma" className="h-full w-full object-cover" />
+                <img src="/Profile_icon.jpeg" alt="Divyanshu Sharma" className="h-full w-full object-cover" />
               </div>
             </div>
             <span className="text-white font-extrabold text-sm sm:text-base tracking-wider group-hover:text-[#00E5FF] transition-colors">
@@ -119,7 +119,7 @@ export default function Home() {
             © {new Date().getFullYear()} Divyanshu Sharma. All Rights Reserved.
           </p>
           <p className="font-mono text-[10px] tracking-widest text-[#7B61FF]">
-            TURNING_DATA_INTO_DECISIONS // PORTFOLIO_V1.0
+            TURNING_DATA_INTO_DECISIONS // PORTFOLIO_V1.1
           </p>
         </div>
       </footer>

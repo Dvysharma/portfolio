@@ -56,7 +56,7 @@ const timelineEvents = [
     duration: "April 2026 - July 2026",
     role: "AI/ML Intern",
     company: "CheckExplore Technologies",
-    description: "Worked on real-world AI and data-driven projects. Supported machine learning workflows, data analysis, and insurance problem-solving for key client Yokohama Tyre.",
+    description: "Worked on real-world AI and data-driven projects. Contributed to AI and data analytics solutions for Yokohama Tyre, supporting machine learning workflows, insurance claim analysis, and business decision-making through data-driven insights.",
     icon: Cpu,
     color: "#00FFB3",
   },

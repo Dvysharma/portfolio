@@ -31,8 +31,8 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Divyanshu Sharma" }],
   icons: {
-    icon: "/Profile_icon.png",
-    apple: "/Profile_icon.png",
+    icon: "/Profile_icon.jpeg",
+    apple: "/Profile_icon.jpeg",
   },
   openGraph: {
     title: "Divyanshu Sharma | Portfolio",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     siteName: "Divyanshu Sharma | Portfolio",
     images: [
       {
-        url: "/Profile_icon.png",
+        url: "/Profile_icon.jpeg",
         width: 800,
         height: 800,
         alt: "Divyanshu Sharma",
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     title: "Divyanshu Sharma | Portfolio",
     description:
       "Personal portfolio of Divyanshu Sharma — Data & AI professional.",
-    images: ["/Profile_icon.png"],
+    images: ["/Profile_icon.jpeg"],
   },
 };
 
@@ -71,12 +71,12 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <link rel="icon" href="/Profile_icon.png" sizes="any" />
-        <link rel="apple-touch-icon" href="/Profile_icon.png" />
-        <link rel="shortcut icon" href="/Profile_icon.png" />
+        <link rel="icon" href="/Profile_icon.jpeg" sizes="any" />
+        <link rel="apple-touch-icon" href="/Profile_icon.jpeg" />
+        <link rel="shortcut icon" href="/Profile_icon.jpeg" />
         <script dangerouslySetInnerHTML={{__html: `(async () => {
           try {
-            const ICON = '/Profile_icon.png';
+            const ICON = '/Profile_icon.jpeg';
             const img = new Image();
             img.crossOrigin = 'anonymous';
             img.src = ICON;
