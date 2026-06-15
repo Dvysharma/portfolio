@@ -202,6 +202,54 @@ I work at the intersection of data, business, and artificial intelligence, trans
       if (!response.ok) {
         const errorText = await response.text();
         console.error("Gemini API Error:", errorText);
+
+        // Catch rate-limits/quota errors and fallback to OpenRouter if configured
+        if (openRouterKey) {
+          console.warn("Chat API: Gemini API failed (likely quota or rate limit). Falling back to OpenRouter...");
+          
+          const openRouterMessages = [
+            { role: "system", content: systemPrompt },
+            ...messages.map((m: any) => ({
+              role: m.role === "assistant" ? "assistant" : "user",
+              content: m.content || m.text || ""
+            }))
+          ];
+
+          try {
+            const orResponse = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+              method: "POST",
+              headers: {
+                "Authorization": `Bearer ${openRouterKey}`,
+                "Content-Type": "application/json",
+                "HTTP-Referer": "http://localhost:3000",
+                "X-Title": "Divyanshu Portfolio"
+              },
+              body: JSON.stringify({
+                model: "openrouter/free",
+                messages: openRouterMessages,
+                temperature: 0.6,
+                max_tokens: 400
+              })
+            });
+
+            if (orResponse.ok) {
+              const orData = await orResponse.json();
+              const candidateText = orData.choices?.[0]?.message?.content || "I'm sorry, I couldn't process that response.";
+
+              return NextResponse.json({
+                role: "model",
+                parts: [{ text: candidateText }],
+                provider: "OpenRouter (Gemini Fallback)"
+              });
+            } else {
+              const orErrorText = await orResponse.text();
+              console.error("Chat API: OpenRouter Fallback also failed:", orErrorText);
+            }
+          } catch (orError) {
+            console.error("Chat API: OpenRouter Fallback request error:", orError);
+          }
+        }
+
         return NextResponse.json(
           { error: "Gemini API error", details: errorText },
           { status: 500 }
