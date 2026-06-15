@@ -110,7 +110,7 @@ I work at the intersection of data, business, and artificial intelligence, trans
         "X-Title": "Divyanshu Portfolio"
       },
       body: JSON.stringify({
-        model: "google/gemini-2.5-flash:free", // Using the free Gemini model on OpenRouter
+        model: "openrouter/free", // Using the auto-routing free model on OpenRouter
         messages: openRouterMessages,
         temperature: 0.6,
         max_tokens: 400
