@@ -120,7 +120,7 @@ export default function Home() {
             © {new Date().getFullYear()} Divyanshu Sharma. All Rights Reserved.
           </p>
           <p className="font-mono text-[10px] tracking-widest text-[#7B61FF]">
-            TURNING_DATA_INTO_DECISIONS // PORTFOLIO_V1.1
+            TURNING_DATA_INTO_DECISIONS // PORTFOLIO_V1.2
           </p>
         </div>
       </footer>

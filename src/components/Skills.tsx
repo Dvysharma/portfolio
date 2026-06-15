@@ -76,9 +76,11 @@ export default function Skills() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           {/* 3D Canvas Column */}
-          <div className="lg:col-span-5 flex justify-center items-center relative">
-            <div className="absolute inset-0 bg-gradient-to-tr from-[#7B61FF]/10 to-transparent rounded-full blur-2xl pointer-events-none" />
-            <SkillGalaxyCanvas />
+          <div className="lg:col-span-5 flex justify-center items-center relative py-6">
+            <div className="absolute inset-0 bg-gradient-to-tr from-[#7B61FF]/15 to-transparent rounded-full blur-3xl pointer-events-none" />
+            <div className="h-[320px] w-[320px] sm:h-[360px] sm:w-[360px] md:h-[400px] md:w-[400px] rounded-full border border-white/10 bg-[#0b0f24]/30 backdrop-blur-md overflow-hidden relative flex items-center justify-center shadow-2xl shadow-[#7B61FF]/5 hover:border-[#00E5FF]/20 transition-all duration-500">
+              <SkillGalaxyCanvas />
+            </div>
           </div>
 
           {/* Cards Column */}

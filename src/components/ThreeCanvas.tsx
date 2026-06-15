@@ -267,14 +267,14 @@ export function SkillGalaxyCanvas() {
     setMounted(true);
   }, []);
 
-  if (!mounted) return <div className="h-[350px] w-full bg-[#050816]" />;
+  if (!mounted) return <div className="h-full w-full bg-transparent" />;
 
   return (
-    <div className="h-[350px] md:h-[450px] w-full">
-      <Canvas camera={{ position: [0, 0, 5.5], fov: 55 }}>
-        <ambientLight intensity={0.6} />
-        <pointLight position={[10, 10, 10]} intensity={2} color="#00E5FF" />
-        <pointLight position={[-10, -10, -10]} intensity={1} color="#7B61FF" />
+    <div className="h-full w-full">
+      <Canvas camera={{ position: [0, 0, 6.2], fov: 55 }}>
+        <ambientLight intensity={0.8} />
+        <pointLight position={[10, 10, 10]} intensity={2.5} color="#00E5FF" />
+        <pointLight position={[-10, -10, -10]} intensity={1.5} color="#7B61FF" />
         <SkillSphere />
       </Canvas>
     </div>
