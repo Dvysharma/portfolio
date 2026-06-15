@@ -56,6 +56,10 @@ async function fetchOpenRouter(apiKey: string, messages: any[], systemPrompt: st
   return response;
 }
 
+// Keep track of Gemini key rate limits in-memory to avoid slow consecutive timeouts
+let isGeminiRateLimited = false;
+let rateLimitResetTime = 0;
+
 export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
@@ -63,10 +67,24 @@ export async function POST(req: Request) {
     // Prefer direct GEMINI_API_KEY, fallback to OPENROUTER_API_KEY
     const geminiKey = process.env.GEMINI_API_KEY?.trim();
     const openRouterKey = process.env.OPENROUTER_API_KEY?.trim();
-    const apiKey = geminiKey || openRouterKey;
+    
+    // Check if Gemini is marked as rate-limited in memory
+    const isGeminiBlocked = isGeminiRateLimited && Date.now() < rateLimitResetTime;
+    
+    // Determine provider & key to use
+    let useOpenRouter = false;
+    let apiKeyToUse = "";
+    
+    if (openRouterKey && (isGeminiBlocked || !geminiKey || geminiKey.startsWith("sk-or-"))) {
+      useOpenRouter = true;
+      apiKeyToUse = openRouterKey;
+    } else {
+      apiKeyToUse = geminiKey || openRouterKey || "";
+      useOpenRouter = apiKeyToUse.startsWith("sk-or-") || apiKeyToUse === openRouterKey;
+    }
 
-    // Check if the API key is configured. If not, return a helpful instruction.
-    if (!apiKey) {
+    // Check if any API key is configured. If not, return a helpful instruction.
+    if (!apiKeyToUse) {
       return NextResponse.json({
         role: "model",
         parts: [{ text: "Hello! I am Divyanshu's AI assistant. 🚀\n\nTo enable me to answer your questions, please configure a free **`OPENROUTER_API_KEY`** or **`GEMINI_API_KEY`** in the project's environment variables (e.g. inside `.env.local` or Vercel dashboard)." }]
@@ -149,13 +167,14 @@ I work at the intersection of data, business, and artificial intelligence, trans
 - LinkedIn: https://www.linkedin.com/in/divyanshu-sharma-02591726a/
 - GitHub: https://github.com/Dvysharma`;
 
-    // Detect if we should use OpenRouter
-    const isOpenRouter = apiKey === openRouterKey || apiKey.startsWith("sk-or-");
-
-    if (isOpenRouter) {
-      console.log("Chat API: Detected OpenRouter key. Routing request to OpenRouter...");
+    if (useOpenRouter) {
+      if (isGeminiBlocked) {
+        console.log("Chat API: Gemini is temporarily rate-limited/quota-exhausted in memory. Bypassing Gemini directly to OpenRouter...");
+      } else {
+        console.log("Chat API: Detected OpenRouter key. Routing request to OpenRouter...");
+      }
       
-      const response = await fetchOpenRouter(apiKey, messages, systemPrompt);
+      const response = await fetchOpenRouter(apiKeyToUse, messages, systemPrompt);
 
       if (!response.ok) {
         const errorText = await response.text();
@@ -179,10 +198,10 @@ I work at the intersection of data, business, and artificial intelligence, trans
     } else {
       console.log("Chat API: Routing request directly to Google Gemini API...");
       // --- ROUTE DIRECTLY TO GOOGLE GEMINI API ---
-      const useBearer = apiKey.startsWith("ya29.");
+      const useBearer = apiKeyToUse.startsWith("ya29.");
       const requestUrl = useBearer
         ? "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent"
-        : `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+        : `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKeyToUse}`;
 
       const contents = messages.map((m: any) => ({
         role: m.role === "assistant" ? "model" : "user",
@@ -193,7 +212,7 @@ I work at the intersection of data, business, and artificial intelligence, trans
         "Content-Type": "application/json",
       };
       if (useBearer) {
-        headers["Authorization"] = `Bearer ${apiKey}`;
+        headers["Authorization"] = `Bearer ${apiKeyToUse}`;
       }
 
       let response = await fetch(requestUrl, {
@@ -213,25 +232,37 @@ I work at the intersection of data, business, and artificial intelligence, trans
 
       // Fallback directly to gemini-1.5-flash if gemini-2.5-flash is overloaded or unavailable
       if (!response.ok) {
-        console.warn("Primary direct gemini-2.5-flash failed. Attempting fallback to gemini-1.5-flash...");
-        const fallbackUrl = useBearer
-          ? "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
-          : `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+        if (response.status === 429 || response.status === 403) {
+          console.warn(`Chat API: Primary Gemini call failed with status ${response.status}. Marking Gemini as rate-limited.`);
+          isGeminiRateLimited = true;
+          rateLimitResetTime = Date.now() + 5 * 60 * 1000; // Block for 5 minutes
+        } else {
+          console.warn("Primary direct gemini-2.5-flash failed. Attempting fallback to gemini-1.5-flash...");
+          const fallbackUrl = useBearer
+            ? "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
+            : `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKeyToUse}`;
 
-        response = await fetch(fallbackUrl, {
-          method: "POST",
-          headers,
-          body: JSON.stringify({
-            contents,
-            systemInstruction: {
-              parts: [{ text: systemPrompt }]
-            },
-            generationConfig: {
-              temperature: 0.6,
-              maxOutputTokens: 400,
-            }
-          }),
-        });
+          response = await fetch(fallbackUrl, {
+            method: "POST",
+            headers,
+            body: JSON.stringify({
+              contents,
+              systemInstruction: {
+                parts: [{ text: systemPrompt }]
+              },
+              generationConfig: {
+                temperature: 0.6,
+                maxOutputTokens: 400,
+              }
+            }),
+          });
+
+          if (!response.ok && (response.status === 429 || response.status === 403)) {
+            console.warn(`Chat API: Fallback Gemini call failed with status ${response.status}. Marking Gemini as rate-limited.`);
+            isGeminiRateLimited = true;
+            rateLimitResetTime = Date.now() + 5 * 60 * 1000; // Block for 5 minutes
+          }
+        }
       }
 
       if (!response.ok) {
