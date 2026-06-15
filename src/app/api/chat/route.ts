@@ -96,6 +96,7 @@ I work at the intersection of data, business, and artificial intelligence, trans
     const isOpenRouter = apiKey.startsWith("sk-or-");
 
     if (isOpenRouter) {
+      console.log("Chat API: Detected OpenRouter key prefix ('sk-or-'). Routing request to OpenRouter...");
       // --- ROUTE TO OPENROUTER ---
       const openRouterMessages = [
         { role: "system", content: systemPrompt },
@@ -135,10 +136,12 @@ I work at the intersection of data, business, and artificial intelligence, trans
 
       return NextResponse.json({
         role: "model",
-        parts: [{ text: candidateText }]
+        parts: [{ text: candidateText }],
+        provider: "OpenRouter"
       });
 
     } else {
+      console.log("Chat API: Routing request directly to Google Gemini API...");
       // --- ROUTE DIRECTLY TO GOOGLE GEMINI API ---
       const useBearer = apiKey.startsWith("ya29.");
       const requestUrl = useBearer
@@ -209,7 +212,8 @@ I work at the intersection of data, business, and artificial intelligence, trans
 
       return NextResponse.json({
         role: "model",
-        parts: [{ text: candidateText }]
+        parts: [{ text: candidateText }],
+        provider: "Google Gemini"
       });
     }
 
