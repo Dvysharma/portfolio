@@ -16,6 +16,37 @@ const QUICK_QUESTIONS = [
   { text: "CheckExplore Intern?", query: "What did you work on during your CheckExplore Technologies internship?" }
 ];
 
+// Helper to render basic markdown bold (**) and inline code (`) safely
+const renderMessageContent = (text: string) => {
+  if (!text) return null;
+  
+  // Split by double asterisks first
+  const boldParts = text.split(/\*\*([\s\S]*?)\*\*/g);
+  
+  return boldParts.map((part, boldIdx) => {
+    if (boldIdx % 2 === 1) {
+      return (
+        <strong key={boldIdx} className="font-semibold text-white">
+          {part}
+        </strong>
+      );
+    }
+    
+    // Split remaining parts by backticks
+    const codeParts = part.split(/`([^`]+)`/g);
+    return codeParts.map((subPart, codeIdx) => {
+      if (codeIdx % 2 === 1) {
+        return (
+          <code key={codeIdx} className="bg-white/10 px-1.5 py-0.5 rounded text-[10px] font-mono text-[#00E5FF]">
+            {subPart}
+          </code>
+        );
+      }
+      return subPart;
+    });
+  });
+};
+
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
@@ -192,7 +223,7 @@ export default function Chatbot() {
                         : "bg-white/5 border border-white/5 text-[#d0d0d0] rounded-bl-none shadow-sm"
                     }`}
                   >
-                    {msg.content}
+                    {renderMessageContent(msg.content)}
                   </div>
                 </div>
               ))}
