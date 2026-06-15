@@ -1,5 +1,61 @@
 import { NextResponse } from "next/server";
 
+// Helper to remove <think>...</think> tags and unclosed <think> blocks from reasoning models
+function cleanResponseText(text: string): string {
+  if (!text) return "";
+  let cleaned = text.replace(/<think>[\s\S]*?<\/think>/gi, "");
+  cleaned = cleaned.replace(/<think>[\s\S]*/gi, ""); // Remove trailing unclosed think blocks
+  return cleaned.trim();
+}
+
+// Helper to query OpenRouter with preferred model and fallback
+async function fetchOpenRouter(apiKey: string, messages: any[], systemPrompt: string, preferredModel = "meta-llama/llama-3.3-70b-instruct:free") {
+  const openRouterMessages = [
+    { role: "system", content: systemPrompt },
+    ...messages.map((m: any) => ({
+      role: m.role === "assistant" ? "assistant" : "user",
+      content: m.content || m.text || ""
+    }))
+  ];
+
+  let response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+      "HTTP-Referer": "http://localhost:3000",
+      "X-Title": "Divyanshu Portfolio"
+    },
+    body: JSON.stringify({
+      model: preferredModel,
+      messages: openRouterMessages,
+      temperature: 0.6,
+      max_tokens: 600
+    })
+  });
+
+  if (!response.ok && preferredModel !== "openrouter/free") {
+    console.warn(`Chat API: OpenRouter preferred model (${preferredModel}) failed. Falling back to openrouter/free...`);
+    response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+        "HTTP-Referer": "http://localhost:3000",
+        "X-Title": "Divyanshu Portfolio"
+      },
+      body: JSON.stringify({
+        model: "openrouter/free",
+        messages: openRouterMessages,
+        temperature: 0.6,
+        max_tokens: 600
+      })
+    });
+  }
+
+  return response;
+}
+
 export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
@@ -97,31 +153,9 @@ I work at the intersection of data, business, and artificial intelligence, trans
     const isOpenRouter = apiKey === openRouterKey || apiKey.startsWith("sk-or-");
 
     if (isOpenRouter) {
-      console.log("Chat API: Detected OpenRouter key prefix ('sk-or-'). Routing request to OpenRouter...");
-      // --- ROUTE TO OPENROUTER ---
-      const openRouterMessages = [
-        { role: "system", content: systemPrompt },
-        ...messages.map((m: any) => ({
-          role: m.role === "assistant" ? "assistant" : "user",
-          content: m.content || m.text || ""
-        }))
-      ];
-
-      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${apiKey}`,
-          "Content-Type": "application/json",
-          "HTTP-Referer": "http://localhost:3000",
-          "X-Title": "Divyanshu Portfolio"
-        },
-        body: JSON.stringify({
-          model: "openrouter/free", // Using the auto-routing free model on OpenRouter
-          messages: openRouterMessages,
-          temperature: 0.6,
-          max_tokens: 400
-        })
-      });
+      console.log("Chat API: Detected OpenRouter key. Routing request to OpenRouter...");
+      
+      const response = await fetchOpenRouter(apiKey, messages, systemPrompt);
 
       if (!response.ok) {
         const errorText = await response.text();
@@ -133,7 +167,8 @@ I work at the intersection of data, business, and artificial intelligence, trans
       }
 
       const data = await response.json();
-      const candidateText = data.choices?.[0]?.message?.content || "I'm sorry, I couldn't process that response.";
+      const rawText = data.choices?.[0]?.message?.content || "";
+      const candidateText = cleanResponseText(rawText) || "I apologize, could you please rephrase that?";
 
       return NextResponse.json({
         role: "model",
@@ -207,34 +242,13 @@ I work at the intersection of data, business, and artificial intelligence, trans
         if (openRouterKey) {
           console.warn("Chat API: Gemini API failed (likely quota or rate limit). Falling back to OpenRouter...");
           
-          const openRouterMessages = [
-            { role: "system", content: systemPrompt },
-            ...messages.map((m: any) => ({
-              role: m.role === "assistant" ? "assistant" : "user",
-              content: m.content || m.text || ""
-            }))
-          ];
-
           try {
-            const orResponse = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-              method: "POST",
-              headers: {
-                "Authorization": `Bearer ${openRouterKey}`,
-                "Content-Type": "application/json",
-                "HTTP-Referer": "http://localhost:3000",
-                "X-Title": "Divyanshu Portfolio"
-              },
-              body: JSON.stringify({
-                model: "openrouter/free",
-                messages: openRouterMessages,
-                temperature: 0.6,
-                max_tokens: 400
-              })
-            });
+            const orResponse = await fetchOpenRouter(openRouterKey, messages, systemPrompt);
 
             if (orResponse.ok) {
               const orData = await orResponse.json();
-              const candidateText = orData.choices?.[0]?.message?.content || "I'm sorry, I couldn't process that response.";
+              const rawText = orData.choices?.[0]?.message?.content || "";
+              const candidateText = cleanResponseText(rawText) || "I apologize, could you please rephrase that?";
 
               return NextResponse.json({
                 role: "model",
@@ -257,7 +271,8 @@ I work at the intersection of data, business, and artificial intelligence, trans
       }
 
       const data = await response.json();
-      const candidateText = data.candidates?.[0]?.content?.parts?.[0]?.text || "I'm sorry, I couldn't process that response.";
+      const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+      const candidateText = cleanResponseText(rawText) || "I'm sorry, I couldn't process that response.";
 
       return NextResponse.json({
         role: "model",
