@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
+import { Html } from "@react-three/drei";
 import * as THREE from "three";
 
 // --- HERO BACKGROUND NEURAL NETWORK ---
@@ -188,45 +189,72 @@ function SkillSphere() {
     groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, targetX, 0.05);
     
     // Self-spin
-    groupRef.current.rotation.y += 0.002;
+    groupRef.current.rotation.y += 0.0015;
   });
 
   return (
     <group ref={groupRef}>
-      {/* Outer Orbit Rings */}
+      {/* Gyroscopic Orbit Rings */}
       <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[2.8, 2.82, 64]} />
-        <meshBasicMaterial color="#7B61FF" transparent opacity={0.12} side={THREE.DoubleSide} />
+        <ringGeometry args={[2.7, 2.715, 64]} />
+        <meshBasicMaterial color="#7B61FF" transparent opacity={0.15} side={THREE.DoubleSide} />
       </mesh>
       <mesh rotation={[0, Math.PI / 4, 0]}>
-        <ringGeometry args={[3.2, 3.22, 64]} />
-        <meshBasicMaterial color="#00E5FF" transparent opacity={0.08} side={THREE.DoubleSide} />
+        <ringGeometry args={[3.1, 3.115, 64]} />
+        <meshBasicMaterial color="#00E5FF" transparent opacity={0.1} side={THREE.DoubleSide} />
+      </mesh>
+      <mesh rotation={[Math.PI / 4, -Math.PI / 4, 0]}>
+        <ringGeometry args={[2.9, 2.915, 64]} />
+        <meshBasicMaterial color="#00FFB3" transparent opacity={0.1} side={THREE.DoubleSide} />
       </mesh>
 
-      {/* Orbiting particles */}
+      {/* Multi-layered orbiting particle fields */}
+      <points>
+        <sphereGeometry args={[2.8, 28, 28]} />
+        <pointsMaterial color="#00E5FF" size={0.02} transparent opacity={0.18} sizeAttenuation />
+      </points>
       <points>
         <sphereGeometry args={[3.0, 24, 24]} />
-        <pointsMaterial color="#00FFB3" size={0.03} transparent opacity={0.25} sizeAttenuation />
+        <pointsMaterial color="#00FFB3" size={0.025} transparent opacity={0.2} sizeAttenuation />
+      </points>
+      <points>
+        <sphereGeometry args={[3.2, 20, 20]} />
+        <pointsMaterial color="#7B61FF" size={0.03} transparent opacity={0.15} sizeAttenuation />
       </points>
 
       {SKILL_ITEMS.map((skill, idx) => (
         <group key={idx} position={skill.pos}>
           {/* Glowing node sphere */}
           <mesh>
-            <sphereGeometry args={[0.16, 16, 16]} />
+            <sphereGeometry args={[0.12, 16, 16]} />
             <meshStandardMaterial
               color={skill.color}
               emissive={skill.color}
-              emissiveIntensity={1.0}
+              emissiveIntensity={1.5}
               roughness={0.1}
             />
           </mesh>
           
-          {/* Subtle outer halo */}
+          {/* Subtle outer halo wireframe */}
           <mesh>
-            <sphereGeometry args={[0.28, 16, 16]} />
+            <sphereGeometry args={[0.22, 16, 16]} />
             <meshBasicMaterial color={skill.color} transparent opacity={0.15} wireframe />
           </mesh>
+
+          {/* Holographic Text Label */}
+          <Html distanceFactor={6} center>
+            <div
+              className="px-2 py-0.5 rounded-md text-[9px] font-bold text-white whitespace-nowrap select-none pointer-events-none backdrop-blur-md shadow-lg transition-transform duration-300"
+              style={{
+                background: "rgba(5, 8, 22, 0.75)",
+                border: `1px solid ${skill.color}40`,
+                boxShadow: `0 0 8px ${skill.color}20`,
+                textShadow: `0 0 3px ${skill.color}80`
+              }}
+            >
+              {skill.name}
+            </div>
+          </Html>
         </group>
       ))}
     </group>
