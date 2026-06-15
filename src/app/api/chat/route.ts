@@ -4,27 +4,16 @@ export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
 
-    const rawApiKey = process.env.GEMINI_API_KEY;
-    const apiKey = rawApiKey?.trim();
+    // Check for both OPENROUTER_API_KEY or GEMINI_API_KEY (in case they reuse the env name)
+    const apiKey = process.env.OPENROUTER_API_KEY || process.env.GEMINI_API_KEY;
 
     // Check if the API key is configured. If not, return a helpful instruction.
     if (!apiKey) {
-      return NextResponse.json(
-        {
-          error: "GEMINI_API_KEY is not configured",
-          message: "Please add GEMINI_API_KEY in the project's environment variables (Vercel dashboard or .env.local)."
-        },
-        { status: 500 }
-      );
+      return NextResponse.json({
+        role: "model",
+        parts: [{ text: "Hello! I am Divyanshu's AI assistant. 🚀\n\nTo enable me to answer your questions, please configure a free **`OPENROUTER_API_KEY`** in the project's environment variables (e.g. inside `.env.local` or Vercel dashboard)." }]
+      });
     }
-
-    const useBearer = apiKey.startsWith("ya29.");
-    const authHeaders = useBearer
-      ? { Authorization: `Bearer ${apiKey}` }
-      : {};
-    const requestUrl = useBearer
-      ? "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent"
-      : `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
 
     // System prompt containing Divyanshu's profile information
     const systemPrompt = `You are the personal AI Assistant of Divyanshu Sharma, representing him on his portfolio website.
@@ -102,71 +91,45 @@ I work at the intersection of data, business, and artificial intelligence, trans
 - LinkedIn: https://www.linkedin.com/in/divyanshu-sharma-02591726a/
 - GitHub: https://github.com/Dvysharma`;
 
-    // Map frontend message roles to Gemini API roles:
-    // User -> user
-    // Assistant / Model -> model
-    const contents = messages.map((m: any) => ({
-      role: m.role === "assistant" ? "model" : "user",
-      parts: [{ text: m.content || m.text || "" }]
-    }));
+    // Map frontend messages to OpenAI/OpenRouter message format
+    const openRouterMessages = [
+      { role: "system", content: systemPrompt },
+      ...messages.map((m: any) => ({
+        role: m.role === "assistant" ? "assistant" : "user",
+        content: m.content || m.text || ""
+      }))
+    ];
 
-    // Call the Gemini API generateContent endpoint
-    const headers: HeadersInit = {
-      "Content-Type": "application/json",
-      ...(useBearer ? { Authorization: `Bearer ${apiKey}` } : {}),
-    };
-
-    let response = await fetch(requestUrl, {
+    // Call OpenRouter completions endpoint
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
-      headers,
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+        "HTTP-Referer": "http://localhost:3000",
+        "X-Title": "Divyanshu Portfolio"
+      },
       body: JSON.stringify({
-          contents,
-          systemInstruction: {
-            parts: [{ text: systemPrompt }]
-          },
-          generationConfig: {
-            temperature: 0.6,
-            maxOutputTokens: 400,
-          }
-        }),
-      }
-    );
-
-    // Fallback to gemini-1.5-flash if gemini-2.5-flash is unavailable or overloaded
-    if (!response.ok) {
-      console.warn("Primary gemini-2.5-flash failed. Attempting fallback to gemini-1.5-flash...");
-      const fallbackUrl = useBearer
-        ? "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
-        : `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-
-      response = await fetch(fallbackUrl, {
-        method: "POST",
-        headers,
-        body: JSON.stringify({
-          contents,
-          systemInstruction: {
-            parts: [{ text: systemPrompt }]
-          },
-          generationConfig: {
-            temperature: 0.6,
-            maxOutputTokens: 400,
-          }
-        }),
-      });
-    }
+        model: "google/gemini-2.5-flash:free", // Using the free Gemini model on OpenRouter
+        messages: openRouterMessages,
+        temperature: 0.6,
+        max_tokens: 400
+      })
+    });
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error("Gemini API Error:", errorText);
+      console.error("OpenRouter API Error:", errorText);
       return NextResponse.json(
-        { error: "Gemini API error", details: errorText },
+        { error: "OpenRouter API error", details: errorText },
         { status: 500 }
       );
     }
 
     const data = await response.json();
-    const candidateText = data.candidates?.[0]?.content?.parts?.[0]?.text || "I'm sorry, I couldn't process that response.";
+    const candidateText = data.choices?.[0]?.message?.content || "I'm sorry, I couldn't process that response.";
 
+    // Return in the format expected by Chatbot.tsx
     return NextResponse.json({
       role: "model",
       parts: [{ text: candidateText }]
