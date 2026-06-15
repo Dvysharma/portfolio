@@ -1,7 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { SkillGalaxyCanvas } from "./ThreeCanvas";
+import dynamic from "next/dynamic";
+const SkillGalaxyCanvas = dynamic(
+  () => import("./ThreeCanvas").then((mod) => mod.SkillGalaxyCanvas),
+  { ssr: false }
+);
 import { Database, BarChart3, TrendingUp, Cpu } from "lucide-react";
 
 const skillCategories = [

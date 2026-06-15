@@ -71,7 +71,14 @@ export default function Chatbot() {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to fetch answer");
+        let errorMessage = "Failed to fetch answer";
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.error || errorData.message || errorMessage;
+        } catch {
+          // ignore parse error
+        }
+        throw new Error(errorMessage);
       }
 
       const data = await response.json();
@@ -80,9 +87,10 @@ export default function Chatbot() {
       setMessages((prev) => [...prev, { role: "assistant", content: botResponse }]);
     } catch (error) {
       console.error("Chatbot Error:", error);
+      const errorText = error instanceof Error ? error.message : "I'm sorry, I seem to have trouble connecting to the server. Please check your internet or try again later.";
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: "I'm sorry, I seem to have trouble connecting to the server. Please check your internet or try again later." }
+        { role: "assistant", content: errorText }
       ]);
     } finally {
       setIsLoading(false);

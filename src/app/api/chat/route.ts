@@ -4,15 +4,27 @@ export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
 
-    const apiKey = process.env.GEMINI_API_KEY;
+    const rawApiKey = process.env.GEMINI_API_KEY;
+    const apiKey = rawApiKey?.trim();
 
     // Check if the API key is configured. If not, return a helpful instruction.
     if (!apiKey) {
-      return NextResponse.json({
-        role: "model",
-        parts: [{ text: "Hello! I am Divyanshu's AI assistant. 🚀\n\nTo enable me to answer your questions, please configure a free **`GEMINI_API_KEY`** in the project's environment variables (e.g. inside `.env.local` or Vercel dashboard)." }]
-      });
+      return NextResponse.json(
+        {
+          error: "GEMINI_API_KEY is not configured",
+          message: "Please add GEMINI_API_KEY in the project's environment variables (Vercel dashboard or .env.local)."
+        },
+        { status: 500 }
+      );
     }
+
+    const useBearer = apiKey.startsWith("AQ.") || apiKey.startsWith("ya29.");
+    const authHeaders = useBearer
+      ? { Authorization: `Bearer ${apiKey}` }
+      : {};
+    const requestUrl = useBearer
+      ? "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent"
+      : `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
 
     // System prompt containing Divyanshu's profile information
     const systemPrompt = `You are the personal AI Assistant of Divyanshu Sharma, representing him on his portfolio website.
@@ -99,14 +111,15 @@ I work at the intersection of data, business, and artificial intelligence, trans
     }));
 
     // Call the Gemini API generateContent endpoint
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+    const headers: HeadersInit = {
+      "Content-Type": "application/json",
+      ...(useBearer ? { Authorization: `Bearer ${apiKey}` } : {}),
+    };
+
+    let response = await fetch(requestUrl, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({
           contents,
           systemInstruction: {
             parts: [{ text: systemPrompt }]
@@ -119,10 +132,36 @@ I work at the intersection of data, business, and artificial intelligence, trans
       }
     );
 
+    // Fallback to gemini-1.5-flash if gemini-2.5-flash is unavailable or overloaded
+    if (!response.ok) {
+      console.warn("Primary gemini-2.5-flash failed. Attempting fallback to gemini-1.5-flash...");
+      const fallbackUrl = useBearer
+        ? "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
+        : `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+
+      response = await fetch(fallbackUrl, {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          contents,
+          systemInstruction: {
+            parts: [{ text: systemPrompt }]
+          },
+          generationConfig: {
+            temperature: 0.6,
+            maxOutputTokens: 400,
+          }
+        }),
+      });
+    }
+
     if (!response.ok) {
       const errorText = await response.text();
       console.error("Gemini API Error:", errorText);
-      return NextResponse.json({ error: "Gemini API error" }, { status: 500 });
+      return NextResponse.json(
+        { error: "Gemini API error", details: errorText },
+        { status: 500 }
+      );
     }
 
     const data = await response.json();
@@ -135,6 +174,12 @@ I work at the intersection of data, business, and artificial intelligence, trans
 
   } catch (error) {
     console.error("Chat API Route Error:", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    return NextResponse.json(
+      {
+        error: "Internal Server Error",
+        details: error instanceof Error ? error.message : "Unknown error"
+      },
+      { status: 500 }
+    );
   }
 }
