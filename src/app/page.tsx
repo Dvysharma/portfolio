@@ -9,6 +9,7 @@ import PatentResearch from "@/components/PatentResearch";
 import Certifications from "@/components/Certifications";
 import Contact from "@/components/Contact";
 import CustomCursor from "@/components/CustomCursor";
+import Chatbot from "@/components/Chatbot";
 import { useState, useEffect } from "react";
 import { Menu, X, ArrowUp } from "lucide-react";
 
@@ -128,11 +129,14 @@ export default function Home() {
       {showScrollTop && (
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-6 right-6 z-40 h-10 w-10 rounded-xl bg-gradient-to-tr from-[#00E5FF] to-[#7B61FF] text-white flex items-center justify-center shadow-lg transition-transform hover:scale-105 animate-bounce"
+          className="fixed bottom-24 right-6 z-40 h-10 w-10 rounded-xl bg-gradient-to-tr from-[#00E5FF] to-[#7B61FF] text-white flex items-center justify-center shadow-lg transition-transform hover:scale-105 animate-bounce cursor-pointer"
         >
           <ArrowUp className="h-5 w-5" />
         </button>
       )}
+
+      {/* AI Chatbot */}
+      <Chatbot />
     </>
   );
 }
