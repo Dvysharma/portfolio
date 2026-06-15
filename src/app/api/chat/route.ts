@@ -18,7 +18,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const useBearer = apiKey.startsWith("AQ.") || apiKey.startsWith("ya29.");
+    const useBearer = apiKey.startsWith("ya29.");
     const authHeaders = useBearer
       ? { Authorization: `Bearer ${apiKey}` }
       : {};
