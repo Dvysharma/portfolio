@@ -4,9 +4,10 @@ export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
 
-    // Check for both OPENROUTER_API_KEY or GEMINI_API_KEY
-    const rawApiKey = process.env.OPENROUTER_API_KEY || process.env.GEMINI_API_KEY;
-    const apiKey = rawApiKey?.trim();
+    // Prefer direct GEMINI_API_KEY, fallback to OPENROUTER_API_KEY
+    const geminiKey = process.env.GEMINI_API_KEY?.trim();
+    const openRouterKey = process.env.OPENROUTER_API_KEY?.trim();
+    const apiKey = geminiKey || openRouterKey;
 
     // Check if the API key is configured. If not, return a helpful instruction.
     if (!apiKey) {
@@ -92,8 +93,8 @@ I work at the intersection of data, business, and artificial intelligence, trans
 - LinkedIn: https://www.linkedin.com/in/divyanshu-sharma-02591726a/
 - GitHub: https://github.com/Dvysharma`;
 
-    // Detect if the key is an OpenRouter key
-    const isOpenRouter = apiKey.startsWith("sk-or-");
+    // Detect if we should use OpenRouter
+    const isOpenRouter = apiKey === openRouterKey || apiKey.startsWith("sk-or-");
 
     if (isOpenRouter) {
       console.log("Chat API: Detected OpenRouter key prefix ('sk-or-'). Routing request to OpenRouter...");
